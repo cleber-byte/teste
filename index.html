@@ -369,6 +369,19 @@
 // ⚠️ troque pelo seu número (formato: 55 + DDD + número, só dígitos)
 const WHATSAPP_NUMBER = "5511999999999";
 
+// ⚠️ cole aqui a URL do seu Google Apps Script (termina em /exec) para receber os resultados numa planilha
+const SHEET_WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbxSsLemnrRQvd9_ZWcP5LGKdRo8_KFbDmCUskbfiBKEFWXJBMGTRDGk-dU0Ykcrov12yQ/exec";
+
+function enviarResultadoParaPlanilha(payload){
+  if(!SHEET_WEBHOOK_URL || SHEET_WEBHOOK_URL.includes("COLE_AQUI")) return;
+  fetch(SHEET_WEBHOOK_URL, {
+    method: "POST",
+    mode: "no-cors",
+    headers: { "Content-Type": "text/plain" },
+    body: JSON.stringify(payload)
+  }).catch(()=>{});
+}
+
 // ============ DADOS ============
 const STYLES = {
   VIS:{name:"Visionário", phrase:"Mobiliza o time rumo a uma visão. Diz: venha comigo.", color:"var(--vis)", hex:"#5B8DEF", caution:false},
@@ -592,6 +605,17 @@ function showResults(){
   // WhatsApp CTA
   const msg = `Oi! Acabei de fazer o diagnóstico de Perfil de Liderança${userName ? " ("+userName+")" : ""}. Meu perfil predominante é *${STYLES[predominante].name}* e o que menos uso é *${STYLES[menosUsado].name}*. Quero entender como isso se aplica ao Líder de Alta Performance 🦊`;
   document.getElementById("whats-btn").href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
+
+  // Registra o resultado na planilha (Google Sheets), se configurado
+  enviarResultadoParaPlanilha({
+    nome: userName || "(não informado)",
+    predominante: STYLES[predominante].name,
+    segundoMais: STYLES[segundoMais].name,
+    menosUsado: STYLES[menosUsado].name,
+    segundoMenos: STYLES[segundoMenos].name,
+    VIS: scores.VIS, AGR: scores.AGR, DEM: scores.DEM,
+    CON: scores.CON, RIT: scores.RIT, CMD: scores.CMD
+  });
 
   resultsSection.scrollIntoView({behavior:"smooth"});
 }
