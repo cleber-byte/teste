@@ -7,6 +7,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <style>
   :root{
     --bg:#0B0E14;
@@ -240,7 +242,18 @@
     transition:transform .15s, box-shadow .15s;
   }
   .btn-whats:hover{transform:translateY(-1px); box-shadow:0 10px 28px rgba(37,211,102,.28);}
+  .btn-pdf{
+    display:inline-flex; align-items:center; gap:9px;
+    background:none; color:var(--text-muted); font-weight:600; font-size:13.5px;
+    padding:12px 20px; border-radius:10px; border:1px solid var(--border);
+    margin-left:10px; transition:all .15s;
+  }
+  .btn-pdf:hover{border-color:var(--gold); color:var(--text);}
+  .btn-pdf:disabled{opacity:.5; pointer-events:none;}
   .restart-link{display:block; margin-top:20px; font-size:12.5px; color:var(--text-faint); text-decoration:underline; text-underline-offset:3px;}
+  @media (max-width:480px){
+    .btn-pdf{margin-left:0; margin-top:12px; width:100%; justify-content:center;}
+  }
 
   footer{text-align:center; padding:30px 0 50px; font-size:12px; color:var(--text-faint);}
 
@@ -324,30 +337,32 @@
 <!-- RESULTS -->
 <section id="results-section">
   <div class="wrap">
-    <div class="result-header">
-      <div class="result-eyebrow">Diagnóstico concluído</div>
-      <div class="result-title" id="result-title">Seu perfil é <b>—</b></div>
-      <p class="result-sub" id="result-sub"></p>
-    </div>
-
-    <div class="kpi-grid" id="kpi-grid"></div>
-
-    <div class="dash-grid">
-      <div class="panel">
-        <div class="panel-title">Mapa dos 6 estilos</div>
-        <div class="chart-wrap"><canvas id="radar-chart"></canvas></div>
+    <div id="pdf-capture-area">
+      <div class="result-header">
+        <div class="result-eyebrow">Diagnóstico concluído</div>
+        <div class="result-title" id="result-title">Seu perfil é <b>—</b></div>
+        <p class="result-sub" id="result-sub"></p>
       </div>
-      <div class="panel">
-        <div class="panel-title">Pontuação detalhada</div>
-        <div id="breakdown-list"></div>
+
+      <div class="kpi-grid" id="kpi-grid"></div>
+
+      <div class="dash-grid">
+        <div class="panel">
+          <div class="panel-title">Mapa dos 6 estilos</div>
+          <div class="chart-wrap"><canvas id="radar-chart"></canvas></div>
+        </div>
+        <div class="panel">
+          <div class="panel-title">Pontuação detalhada</div>
+          <div id="breakdown-list"></div>
+        </div>
       </div>
-    </div>
 
-    <div id="alert-slot"></div>
+      <div id="alert-slot"></div>
 
-    <div class="insight-panel">
-      <div class="insight-label">A pergunta que importa</div>
-      <div class="insight-text" id="insight-text"></div>
+      <div class="insight-panel">
+        <div class="insight-label">A pergunta que importa</div>
+        <div class="insight-text" id="insight-text"></div>
+      </div>
     </div>
 
     <div class="cta-panel">
@@ -357,6 +372,10 @@
         <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.29-1.39a9.87 9.87 0 004.75 1.21h.01c5.46 0 9.9-4.45 9.9-9.91C21.96 6.45 17.5 2 12.04 2zm0 18.02h-.01a8.2 8.2 0 01-4.18-1.15l-.3-.18-3.11.82.83-3.03-.2-.31a8.2 8.2 0 01-1.26-4.38c0-4.54 3.7-8.24 8.25-8.24 2.2 0 4.27.86 5.83 2.42a8.2 8.2 0 012.41 5.83c0 4.55-3.7 8.24-8.26 8.24zm4.52-6.17c-.25-.12-1.47-.72-1.7-.81-.23-.08-.39-.12-.56.13-.17.24-.64.81-.78.97-.15.17-.29.19-.54.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.24-1.47-1.38-1.72-.15-.24-.02-.38.11-.5.11-.11.25-.29.37-.43.12-.15.16-.25.24-.42.08-.17.04-.31-.02-.43-.06-.12-.56-1.35-.77-1.85-.2-.48-.41-.42-.56-.43-.14-.01-.31-.01-.48-.01-.17 0-.43.06-.66.31-.23.24-.86.84-.86 2.05 0 1.21.88 2.38 1 2.54.12.17 1.73 2.64 4.2 3.7.59.25 1.04.4 1.4.52.59.19 1.12.16 1.54.1.47-.07 1.47-.6 1.68-1.18.2-.58.2-1.08.14-1.18-.06-.1-.23-.16-.48-.28z"/></svg>
         Chamar no WhatsApp com meu resultado
       </a>
+      <button class="btn-pdf" id="btn-pdf" type="button">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        <span id="btn-pdf-label">Baixar resultado em PDF</span>
+      </button>
       <span class="restart-link" id="restart-btn">Refazer o diagnóstico</span>
     </div>
   </div>
@@ -619,6 +638,54 @@ function showResults(){
 
   resultsSection.scrollIntoView({behavior:"smooth"});
 }
+
+// ============ DOWNLOAD PDF ============
+document.getElementById("btn-pdf").addEventListener("click", async ()=>{
+  const btn = document.getElementById("btn-pdf");
+  const label = document.getElementById("btn-pdf-label");
+  const originalLabel = label.textContent;
+  btn.disabled = true;
+  label.textContent = "Gerando PDF...";
+
+  try{
+    const area = document.getElementById("pdf-capture-area");
+    const canvas = await html2canvas(area, {
+      backgroundColor: "#0B0E14",
+      scale: 2,
+      useCORS: true
+    });
+    const imgData = canvas.toDataURL("image/png");
+    const { jsPDF } = window.jspdf;
+    const pdf = new jsPDF("p", "pt", "a4");
+    const pageWidth = pdf.internal.pageSize.getWidth();
+    const pageHeight = pdf.internal.pageSize.getHeight();
+    const imgWidth = pageWidth;
+    const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+    let heightLeft = imgHeight;
+    let position = 0;
+
+    pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
+    heightLeft -= pageHeight;
+
+    while (heightLeft > 0){
+      position = heightLeft - imgHeight;
+      pdf.addPage();
+      pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
+      heightLeft -= pageHeight;
+    }
+
+    const nomeArquivo = userName
+      ? `resultado-lideranca-${userName.toLowerCase().replace(/\s+/g,"-")}.pdf`
+      : "resultado-lideranca.pdf";
+    pdf.save(nomeArquivo);
+  } catch(err){
+    alert("Não consegui gerar o PDF agora. Tenta de novo em alguns segundos.");
+  } finally {
+    btn.disabled = false;
+    label.textContent = originalLabel;
+  }
+});
 
 document.getElementById("restart-btn").addEventListener("click", ()=>{
   answers = new Array(QUESTIONS.length).fill(null);
