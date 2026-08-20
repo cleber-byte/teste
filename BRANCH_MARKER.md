@@ -1,0 +1,1 @@
+Stable production candidate prepared from feat/aguia-command-v1 on 2026-08-20.
