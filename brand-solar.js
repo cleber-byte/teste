@@ -1,4 +1,4 @@
-// Branding override for the current homologation build.
+// Solar Consultoria EC — persistent product branding.
 (function(){
   const BRAND = 'Solar Consultoria EC';
   const SHORT = 'SC';
