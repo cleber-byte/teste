@@ -15,6 +15,15 @@ const AGUIA_PREVIEW_MEMBER = {
 const _aguiaRenderShell = renderShell;
 renderShell = function(){
   _aguiaRenderShell();
+
+  document.title = 'CONTROLE CLEBER E ERIKA ÁGUIA — Inteligência de Carteira';
+  document.querySelectorAll('.brand-title').forEach(el => {
+    el.textContent = 'CONTROLE CLEBER E ERIKA ÁGUIA';
+  });
+  document.querySelectorAll('.mark').forEach(el => {
+    el.textContent = 'CE';
+  });
+
   const env = document.querySelector('.top-title span');
   if(env) env.textContent = 'Homologação privada • acesso total temporário';
   const logout = document.getElementById('logoutBtn');
