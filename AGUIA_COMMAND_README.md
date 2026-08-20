@@ -1,4 +1,4 @@
-# ÁGUIA COMMAND — Inteligência de Carteira & Contemplações
+# Solar Consultoria EC — Inteligência de Carteira & Contemplações
 
 ## Objetivo
 Sistema interno para acompanhamento da carteira de consórcio de Cleber/Erika, com visão executiva, controle financeiro, sorteios, radar de proximidade, contemplações confirmadas, importação de planilhas, multiusuário e auditoria.
@@ -52,4 +52,4 @@ A carga inicial foi derivada da planilha operacional fornecida, com 35 cotas ati
 7. Contemplação é confirmada separadamente após evidência oficial.
 
 ## Próxima fase
-Conectar extração por visão/IA à tela de sorteio, mantendo obrigatoriamente a conferência humana antes da gravação. Também é recomendada a migração deste branch de preview para um repositório privado dedicado `aguia-command` após aprovação visual/funcional.
+Conectar extração por visão/IA à tela de sorteio, mantendo obrigatoriamente a conferência humana antes da gravação. Também é recomendada a migração deste branch de preview para um repositório privado dedicado `solar-consultoria-ec` após aprovação visual/funcional.
