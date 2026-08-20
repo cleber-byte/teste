@@ -1,0 +1,34 @@
+.solar-kpis{grid-template-columns:repeat(4,minmax(0,1fr))}
+.solar-commission-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:14px 0}
+.solar-rate-card{background:#fff;border:1px solid #e6e9ee;border-radius:14px;padding:18px;display:flex;flex-direction:column;gap:5px;box-shadow:0 5px 18px rgba(15,23,42,.04)}
+.solar-rate-card.primary{background:#111827;color:#fff;border-color:#111827}
+.solar-rate-card span{font-size:11px;font-weight:800;letter-spacing:.08em;color:#687386}
+.solar-rate-card.primary span,.solar-rate-card.primary small{color:#cbd5e1}
+.solar-rate-card strong{font-size:28px;line-height:1;font-weight:850;letter-spacing:-.03em}
+.solar-rate-card small{font-size:12px;color:#7b8493}
+.solar-exec-grid{align-items:stretch}
+.solar-plan-compare{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.solar-plan-box{border:1px solid #e7e9ed;border-radius:14px;padding:16px;background:#fafbfc;display:flex;flex-direction:column;gap:6px}
+.solar-plan-box.focus{border-color:#111827;background:#111827;color:#fff}
+.solar-plan-box span{font-size:11px;font-weight:800;letter-spacing:.04em;color:#6b7280}
+.solar-plan-box.focus span,.solar-plan-box.focus small{color:#cbd5e1}
+.solar-plan-box strong{font-size:25px;letter-spacing:-.02em}
+.solar-plan-box b{font-size:16px}
+.solar-plan-box small{font-size:12px;color:#7b8493;line-height:1.35}
+.solar-card-target{display:inline-flex;min-width:34px;height:34px;border-radius:10px;background:#111827;color:#fff;align-items:center;justify-content:center;font-weight:850;font-size:15px}
+.solar-progress{height:6px;border-radius:20px;background:#edf0f3;margin-top:7px;overflow:hidden;min-width:95px}
+.solar-progress span{display:block;height:100%;background:#1f9d68;border-radius:20px}
+.solar-goal-table td{vertical-align:middle}
+.solar-bars{display:flex;flex-direction:column;gap:11px}
+.solar-bar-row{display:grid;grid-template-columns:72px 1fr 118px;gap:10px;align-items:center;font-size:12px}
+.solar-bar-row>span{font-weight:700;color:#566071;text-transform:capitalize}
+.solar-bar-row>div{height:9px;background:#edf0f3;border-radius:20px;overflow:hidden}
+.solar-bar-row i{display:block;height:100%;background:#31c48d;border-radius:20px}
+.solar-bar-row strong{text-align:right;font-size:12px}
+.solar-best{min-height:170px;border-radius:16px;background:linear-gradient(145deg,#111827,#1f2937);color:#fff;padding:22px;display:flex;flex-direction:column;justify-content:center;gap:8px}
+.solar-best span{font-size:13px;font-weight:800;text-transform:capitalize;color:#d1fae5}
+.solar-best strong{font-size:32px;letter-spacing:-.03em}
+.solar-best b{font-size:16px}
+.solar-best small{color:#cbd5e1}
+@media(max-width:1050px){.solar-commission-grid,.solar-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.solar-plan-compare{grid-template-columns:1fr}}
+@media(max-width:720px){.solar-commission-grid,.solar-kpis{grid-template-columns:1fr}.solar-bar-row{grid-template-columns:62px 1fr}.solar-bar-row strong{grid-column:2;text-align:left}.solar-goal-table{min-width:980px}}
