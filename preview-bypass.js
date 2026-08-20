@@ -16,12 +16,12 @@ const _aguiaRenderShell = renderShell;
 renderShell = function(){
   _aguiaRenderShell();
 
-  document.title = 'CONTROLE CLEBER E ERIKA ÁGUIA — Inteligência de Carteira';
+  document.title = 'Solar Consultoria EC — Inteligência de Carteira';
   document.querySelectorAll('.brand-title').forEach(el => {
-    el.textContent = 'CONTROLE CLEBER E ERIKA ÁGUIA';
+    el.textContent = 'Solar Consultoria EC';
   });
   document.querySelectorAll('.mark').forEach(el => {
-    el.textContent = 'CE';
+    el.textContent = 'SC';
   });
 
   const env = document.querySelector('.top-title span');
@@ -47,7 +47,7 @@ renderActivation = function(){
 };
 
 bootApp = async function(){
-  state.session = { user: { id: null, email: 'homologacao@aguia.local' } };
+  state.session = { user: { id: null, email: 'homologacao@solar.local' } };
   state.member = { ...AGUIA_PREVIEW_MEMBER };
   await loadCore();
   renderShell();
